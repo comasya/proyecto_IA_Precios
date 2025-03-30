@@ -45,35 +45,12 @@ def generar_prompt(articulo, precios):
         Recomendaciones para el comprador: [Recomendaciones para tomar una decisión informada]
         """
     )
-
 def obtener_respuesta_gemini(prompt):
     """Obtiene una respuesta de la API de Gemini."""
-    try:
-        # Lista los modelos disponibles
-        available_models = genai.list_models()
-        print("Modelos Disponibles:")
-        for model_info in available_models:
-            print(model_info)
 
-        # Intenta usar el modelo 'gemini-pro' o un modelo disponible alternativo
-        model_name = 'gemini-pro'
-        if not any(model_info.name == model_name for model_info in available_models):
-            # encuentra un modelo alternativo que soporte generate content.
-            for model_info in available_models:
-                if 'generateContent' in model_info.supported_generation_methods:
-                    model_name = model_info.name
-                    print (f"using model {model_name}")
-                    break
-            else:
-                st.error("No se encontró ningún modelo compatible.")
-                return "No se encontró ningún modelo compatible."
-
-        model = genai.GenerativeModel(model_name)
-        response = model.generate_content(prompt)
-        return response.text if response else "No se obtuvo respuesta de Gemini."
-    except Exception as e:
-        st.error(f"Error al obtener respuesta de Gemini: {e}")
-        return f"No se pudo obtener respuesta debido a un error: {e}"
+    model = genai.GenerativeModel("gemini-2.0-flash")
+    response = model.generate_content(prompt)
+    return response.text
 
 def main():
     """Aplicación principal en Streamlit."""
