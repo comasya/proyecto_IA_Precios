@@ -16,7 +16,7 @@ genai.configure(api_key=st.secrets["API_KEY_GEMINI"])
 
 def obtener_precios_mercado_libre(articulo):
     """Obtiene los nombres y precios de Mercado Libre para un artículo dado."""
-    url = f"https://listado.mercadolibre.com.ar/{articulo}"
+    url = f"https://listado.mercadolibre.com.ar//sites/$SITE_ID/search?nickname=$NICKNAME&keywords={articulo}"
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
     }
