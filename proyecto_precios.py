@@ -37,11 +37,12 @@ def generar_prompt(articulo, precios):
     """Genera un prompt detallado para la API de Gemini."""
     precios_str = ", ".join([f"{p['Nombre']}: {p['Precio']}" for p in precios])
     return (
-        f"""Analiza los siguientes precios del artículo '{articulo}' encontrados en Google Shopping: {precios_str}.
-        Considera las variaciones de precio y la información disponible para determinar un rango de precio óptimo para este producto.
-        Proporciona tu respuesta en el siguiente formato, indicando el rango de precio optimo, y luego un breve análisis.
-        Rango de precio optimo:
-        Analisis:
+        f"""Como comprador interesado en el artículo '{articulo}', necesito tu ayuda para analizar los siguientes precios encontrados en Google Shopping: {precios_str}.
+        Considera las variaciones de precio, la información disponible y cualquier otro factor relevante para determinar un rango de precio óptimo y proporcionar recomendaciones útiles.
+        Proporciona tu respuesta en el siguiente formato:
+        Rango de precio óptimo: [Rango de precio]
+        Análisis de precios: [Análisis detallado de las variaciones, tendencias, etc.]
+        Recomendaciones para el comprador: [Recomendaciones para tomar una decisión informada]
         """
     )
 
