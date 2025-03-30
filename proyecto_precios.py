@@ -48,7 +48,26 @@ def generar_prompt(articulo, precios):
 def obtener_respuesta_gemini(prompt):
     """Obtiene una respuesta de la API de Gemini."""
     try:
-        model = genai.GenerativeModel('gemini-pro')
+        # Lista los modelos disponibles
+        available_models = genai.list_models()
+        print("Modelos Disponibles:")
+        for model_info in available_models:
+            print(model_info)
+
+        # Intenta usar el modelo 'gemini-pro' o un modelo disponible alternativo
+        model_name = 'gemini-pro'
+        if not any(model_info.name == model_name for model_info in available_models):
+            # encuentra un modelo alternativo que soporte generate content.
+            for model_info in available_models:
+                if 'generateContent' in model_info.supported_generation_methods:
+                    model_name = model_info.name
+                    print (f"using model {model_name}")
+                    break
+            else:
+                st.error("No se encontró ningún modelo compatible.")
+                return "No se encontró ningún modelo compatible."
+
+        model = genai.GenerativeModel(model_name)
         response = model.generate_content(prompt)
         return response.text if response else "No se obtuvo respuesta de Gemini."
     except Exception as e:
